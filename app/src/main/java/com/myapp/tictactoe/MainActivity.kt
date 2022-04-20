@@ -103,6 +103,19 @@ class MainActivity : AppCompatActivity() {
         else if(player2.contains(3)&&player2.contains(6)&&player2.contains(9))
             winner=2
 
+        //diagnol wise
+        if(player1.contains(1)&&player1.contains(5)&&player1.contains(9))
+            winner=1
+        if(player2.contains(1)&&player2.contains(5)&&player2.contains(9))
+            winner=2
+
+        if(player1.contains(3)&&player1.contains(5)&&player1.contains(7))
+            winner=1
+
+        if(player2.contains(3)&&player2.contains(5)&&player2.contains(7))
+            winner=2
+
+
         if(winner==1)
         {
             Toast.makeText(this,"Player 1 Wins",Toast.LENGTH_SHORT).show()
