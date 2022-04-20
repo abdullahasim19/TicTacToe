@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 //import kotlin.random.Random
 import  java.util.Random
+import kotlin.math.max
+import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -149,7 +151,8 @@ class MainActivity : AppCompatActivity() {
 
         var r=Random()
         var indexSelect=r.nextInt(emptycells.size)
-        val cellid=emptycells[indexSelect]
+        //val cellid=emptycells[indexSelect]
+        val cellid=findMove()
         var newButton:Button
         when(cellid)
         {
@@ -220,4 +223,136 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
 
     }
+    fun checkWinnerMinMax():Int
+    {
+        var winner=-1
+        //row wise
+        if(player1.contains(1)&&player1.contains(2)&&player1.contains(3))
+            winner=1
+        else if(player2.contains(1)&&player2.contains(2)&&player2.contains(3))
+            winner=2
+
+        else if(player1.contains(4)&&player1.contains(5)&&player1.contains(6))
+            winner=1
+        else if(player2.contains(4)&&player2.contains(5)&&player2.contains(6))
+            winner=2
+
+        else if(player1.contains(7)&&player1.contains(8)&&player1.contains(9))
+            winner=1
+        else if(player2.contains(7)&&player2.contains(8)&&player2.contains(9))
+            winner=2
+        //column wise
+
+        else if(player1.contains(1)&&player1.contains(4)&&player1.contains(7))
+            winner=1
+        else if(player2.contains(1)&&player2.contains(4)&&player2.contains(7))
+            winner=2
+
+        else if(player1.contains(2)&&player1.contains(5)&&player1.contains(8))
+            winner=1
+        else if(player2.contains(2)&&player2.contains(5)&&player2.contains(8))
+            winner=2
+
+        else if(player1.contains(3)&&player1.contains(6)&&player1.contains(9))
+            winner=1
+        else if(player2.contains(3)&&player2.contains(6)&&player2.contains(9))
+            winner=2
+
+        //diagnol wise
+        if(player1.contains(1)&&player1.contains(5)&&player1.contains(9))
+            winner=1
+        if(player2.contains(1)&&player2.contains(5)&&player2.contains(9))
+            winner=2
+
+        if(player1.contains(3)&&player1.contains(5)&&player1.contains(7))
+            winner=1
+
+        if(player2.contains(3)&&player2.contains(5)&&player2.contains(7))
+            winner=2
+
+
+        if(winner==1)
+            return 100
+        else if (winner==2)
+            return -100
+
+        return -99
+
+    }
+    fun minMax(isMax:Boolean):Int {
+        var score=checkWinnerMinMax()
+        if(score==100)
+            return score
+        if (score==-100)
+            return score
+
+        var emptycells=ArrayList<Int>()
+        for(c:Int in 1..9)
+        {
+            if(!player1.contains(c) && !player2.contains(c)) {
+                emptycells.add(c)
+            }
+        }
+        if (emptycells.size==0)
+            return 0
+
+        if (isMax)
+        {
+            var best=-1000
+            for (l:Int in 1..9)
+            {
+                if (emptycells.contains(l))
+                {
+                    player1.add(l)
+                    best=max(best,minMax(!isMax))
+                    player1.remove(l)
+                }
+            }
+            return best
+        }
+        else
+        {
+            var best:Int=1000
+            for(l:Int in 1..9)
+            {
+                if(emptycells.contains(l))
+                {
+                    player2.add(l)
+                    best=min(best,minMax(!isMax))
+                    player2.remove(l)
+                }
+            }
+            return best
+        }
+
+    }
+    fun findMove():Int
+    {
+        var score:Int=-1
+        var num:Int=0
+        var emptycells=ArrayList<Int>()
+        for(c:Int in 1..9)
+        {
+            if(!player1.contains(c) && !player2.contains(c)) {
+                emptycells.add(c)
+            }
+        }
+        for(i:Int in 1..9)
+        {
+            if(emptycells.contains(i))
+            {
+                player1.add(i)
+                var moveBest=minMax(false)
+                player1.remove(i)
+                if(moveBest>score)
+                {
+                    score=moveBest
+                    num=i
+                }
+            }
+        }
+        return num
+    }
+
+
 }
