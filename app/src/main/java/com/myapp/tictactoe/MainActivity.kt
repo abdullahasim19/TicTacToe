@@ -118,14 +118,14 @@ class MainActivity : AppCompatActivity() {
 
         if(winner==1)
         {
-            Toast.makeText(this,"Player 1 Wins",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"Player 1 Wins",Toast.LENGTH_SHORT).show()
             player1WinCount++
             showDialog("Player 1 Wins")
             restartGame()
         }
         else if(winner==2)
         {
-            Toast.makeText(this,"Player 2 Wins",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this,"Player 2 Wins",Toast.LENGTH_SHORT).show()
             player2WinCount++
             showDialog("Player 2 Wins")
             restartGame()
