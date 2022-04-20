@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 //import kotlin.random.Random
 import  java.util.Random
 
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         if(gameOver)
         {
             Toast.makeText(this,"Game Over!",Toast.LENGTH_SHORT).show()
+            showDialog("Its a Draw")
             restartGame()
         }
     }
@@ -105,12 +107,14 @@ class MainActivity : AppCompatActivity() {
         {
             Toast.makeText(this,"Player 1 Wins",Toast.LENGTH_SHORT).show()
             player1WinCount++
+            showDialog("Player 1 Wins")
             restartGame()
         }
         else if(winner==2)
         {
             Toast.makeText(this,"Player 2 Wins",Toast.LENGTH_SHORT).show()
             player2WinCount++
+            showDialog("Player 2 Wins")
             restartGame()
         }
 
@@ -177,6 +181,30 @@ class MainActivity : AppCompatActivity() {
             newButton.isEnabled=true
         }
         Toast.makeText(this,"Player 1 $player1WinCount Player 2 $player2WinCount",Toast.LENGTH_SHORT).show()
+
+    }
+    fun showDialog(titles:String)
+    {
+        val builder = AlertDialog.Builder(this)
+        //set title for alert dialog
+        builder.setTitle(titles)
+        //set message for alert dialog
+        builder.setMessage("Do you want to Play Again?")
+
+        //performing positive action
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+
+        }
+
+        //performing negative action
+        builder.setNegativeButton("No"){dialogInterface, which ->
+            finish()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
 
     }
 }
